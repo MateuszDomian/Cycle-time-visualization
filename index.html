@@ -2,75 +2,59 @@
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Make your virtual closet and match it to ideal outfit">
-    <meta name="keyword" content="virtual closet, outfit">
-    <title>Virtual closet</title>
-
-    <link href="styles/style.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-    <script src="javascripting/scope.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Cycle time visualization</title>
 
 </head>
 
 <body>
-    <div class="wrapper">
-        <header>
-            <div class="welcome_text">
-                <h1>
-                    Welcome in my virtual closet
-                </h1>
+    <div class="container">
+        <aside>
+            <div class="sidebar">
+                <button id="toggleSidebarBtn"><i class="arrow"></i></button>
+                <div class="row">
+                    <i class="logo fa fa-clock-o fa-3x"></i>
+                    <div class="title">Cycle time properties</div>
+                </div>
+                <div class="actionControllButtons">
+                    <button onclick="createActionRow()">Add action row</button>
+                </div>
+                <div id="actionRowsContainer">
+                    <div class="actionNameRow">
+                        <input class="actionNameInput" type="text" value="Action name" id="nameValueRow-1">
+                        <input class="actionTimeInput" type="text" value="10" id="timeValueRow-1">
+                        <select id="actiontype-1">
+                            <option value="1">Type1</option>
+                            <option value="2">Type2</option>
+                            <option value="3">Type3</option>
+                        </select>
+                        <button onclick="removeActionRow(this)">X</button>
+                    </div>
+                </div>
             </div>
-            <div class="head_image">
-                <img src="images/woman_in_front_of_closet.jpeg" alt="woman in front of closet" max-width=30%>
+        </aside>
+        <div class="mainDiagram gridContainer">
+            <div class="scale">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
             </div>
-        </header>
-        <main>
-            <div class="clothes_type_list">
-                <p>
-                    On this site you can add your clothes to virtual closet. <br>
-                    You can add:<br>
-                <ol>
-                    <li>Upper body</li>
-                    <ul>
-                        <li>Shirts</li>
-                        <li>Jackets</li>
-                        <li>Blouse</li>
-                        <li>Hoods</li>
-                    </ul>
-                    <li>Lower body</li>
-                    <ul>
-                        <li>Pants</li>
-                        <li>Jeans</li>
-                        <li>Shorts</li>
-                    </ul>
-                    <li>Accessory</li>
-                    <ul>
-                        <li>Glasses</li>
-                        <li>Hats</li>
-                        <li>Jewelery</li>
-                        <li>Bags</li>
-                    </ul>
-                </ol>
-                </p>
+            <div class="diagramData">
+                <div id="diagramRow-1">Action Name</div>
             </div>
-            <aside>
-                <h3>Recomended shops</h3>
-                <li>
-                    <a href="https://www.vinted.pl/">Vinted</a>
-                </li>
-                <li>
-                    <a href="https://www.olx.pl/">OLX</a>
-                </li>
-            </aside>
-        </main>
-        <footer>
-            © My test page
-        </footer>
+        </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
