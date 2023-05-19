@@ -1,0 +1,147 @@
+:root {
+    --bgColor: #E3E8ED;
+    /*background color*/
+    --contrastColor: #7DBCB8;
+    /*contrast color*/
+    --mainColor: #136F96;
+    /*main color*/
+    --daColor: #50708B;
+    /*dark accent color*/
+    --dsColor: #131B25;
+    /*dark shades color*/
+
+    --widthUnit: 40px;
+    --heightUnit: 22px;
+}
+
+.container {
+    color: var(--bgColor);
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    min-width: 150px;
+    height: 100vh;
+    background-color: var(--daColor);
+    color: var(--bgColor);
+    transition: 100ms ease;
+    position: relative;
+    box-shadow: 0px 1px 5px 1px var(--daColor);
+}
+
+.sidebarSmall {
+    width: 6%;
+    min-width: 0px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.title {
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+}
+
+.logo {
+    color: var(--contrastColor);
+    margin: 5px;
+}
+
+.hideText {
+    display: none;
+}
+
+.arrow {
+    border: solid var(--daColor);
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transition: 400ms ease;
+    transform: rotate(135deg);
+}
+
+.arrowTransform {
+    transform: rotate(-45deg);
+}
+
+#toggleSidebarBtn {
+    position: absolute;
+    border: none;
+    height: 40px;
+    width: 30px;
+    border-radius: 0 15% 15% 0;
+    box-shadow: 0px 1px 5px 1px var(--daColor);
+    left: 100%;
+    cursor: pointer;
+}
+
+.mainDiagram {
+    display: grid;
+    background-color: orange;
+    height: 100%;
+}
+
+
+.actionNameInput {
+    width: 100px;
+    background-color: var(--daColor);
+    border: none;
+    color: var(--contrastColor);
+}
+
+.actionNameInput:hover {
+    color: var(--bgColor);
+    cursor: pointer;
+}
+
+.actionTimeInput {
+    width: 50px;
+    background-color: var(--daColor);
+    border: none;
+    color: var(--contrastColor);
+}
+
+.actionTimeInput:hover {
+    color: var(--bgColor);
+    cursor: pointer;
+}
+
+.diagramData {
+    display: grid;
+    justify-items: stretch;
+    text-align: center;
+    grid-template-rows: 22px;
+}
+
+.scale {
+    display: grid;
+    grid-template-columns: repeat(10, var(--widthUnit));
+    justify-items: center;
+}
+
+div.diagramData :nth-child(1) {
+    background-color: #131B25;
+    grid-row: 1;
+    grid-column: 1 / 10;
+}
+
+.actionNameRow{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
+
+select{
+    background-color: var(--daColor);
+    border: none;
+    color: var(--contrastColor);
+}
