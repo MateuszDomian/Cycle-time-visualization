@@ -9,9 +9,11 @@
     /*dark accent color*/
     --dsColor: #131B25;
     /*dark shades color*/
-
+    --zoomRatio: 1;
+    --widthBase: 40;
     --widthUnit: 40px;
     --heightUnit: 22px;
+    
 }
 
 .container {
@@ -144,4 +146,8 @@ select{
     background-color: var(--daColor);
     border: none;
     color: var(--contrastColor);
+}
+
+.zoomBtn > button{
+    width:45%;
 }

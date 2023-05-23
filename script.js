@@ -9,6 +9,22 @@ document.querySelector('#toggleSidebarBtn').onclick = function () {
     sidebarRows.classList.toggle('hideText');
 }
 
+function zoomIn(){
+    let zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
+    document.documentElement.style.setProperty('--zoomRatio',zoomRatio+0.1);
+    zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
+    let widthBase = getComputedStyle(document.documentElement).getPropertyValue('--widthBase');
+    document.documentElement.style.setProperty('--widthUnit', (widthBase*zoomRatio)+'px');
+    }
+    
+    function zoomOut(){
+        let zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
+        document.documentElement.style.setProperty('--zoomRatio',zoomRatio-0.1);
+        zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
+        let widthBase = getComputedStyle(document.documentElement).getPropertyValue('--widthBase');
+        document.documentElement.style.setProperty('--widthUnit', (widthBase*zoomRatio)+'px');
+    }
+
 function createActionRow() {
     //add div row
     const actionRowDiv = document.createElement('div');
@@ -53,8 +69,8 @@ function createActionRow() {
     deleteRowBtn.setAttribute('onclick', 'removeActionRow(this)')
     actionRowDiv.appendChild(deleteRowBtn)
 
-    //drawScale();
-    //drawActionsDiag();
+    drawScale();
+    drawActionsDiag();
 }
 
 function removeActionRow(actionRow) {
@@ -143,6 +159,7 @@ function drawActionsDiag() {
 function objectIdCounter(element) {
     return (element.id.slice(element.id.indexOf('-') + 1));
 }
+
 
 //event listener
 const sidebarPropElement = document.querySelector('.sidebar');
