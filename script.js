@@ -45,13 +45,25 @@ function createActionRow() {
     //add action div in diagram
     const diagramData = document.querySelector('.diagramData');
     const actionRowDiagram = document.createElement('div');
+    actionRowDiagram.setAttribute('class', 'diagramRow');
+    actionRowDiagram.setAttribute('onClick','toggleInfoPopup(this)')
     diagramData.appendChild(actionRowDiagram);
+    //add text div in action div diagram
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('textDiv');
+    actionRowDiagram.appendChild(textDiv);       
     //count object with class
     let nextFreeidCounter = nextRowIdCounter();
     actionRowInputTime.setAttribute('id', 'timeValueRow-' + nextFreeidCounter);
     actionRowInputName.setAttribute('id', 'nameValueRow-' + nextFreeidCounter);
     actionRowDiagram.setAttribute('id', 'diagramRow-' + nextFreeidCounter);
+    
     actionRowDiv.appendChild(actionRowInputTime);
+    //add popup 
+    const popupInfo = document.createElement('span');
+    popupInfo.classList.add('popup');
+    actionRowDiagram.appendChild(popupInfo);
+    popupInfo.setAttribute('id', 'popup-'+ nextFreeidCounter);
     //add select element
     const selectElement = document.createElement('select');
     selectElement.setAttribute('id', 'actiontype-' + nextFreeidCounter);
@@ -76,7 +88,7 @@ function createActionRow() {
 function removeActionRow(actionRow) {
     document.querySelector("#diagramRow-" + objectIdCounter(actionRow)).remove();
     actionRow.parentElement.remove();
-    //drawActionsDiag();
+    drawActionsDiag();
 }
 
 function nextRowIdCounter() {
@@ -128,11 +140,14 @@ function drawActionsDiag() {
         //check nodeType because of some nodes with type text   
         if (actionNodesList[i].nodeType === 1) {
             idCounter = objectIdCounter(actionNodesList[i]);
-            actionNodesList[i].innerHTML = document.querySelector('#nameValueRow-' + idCounter).value;
+            actionNodesList[i].querySelector('.textDiv').innerHTML=document.querySelector('#nameValueRow-' + idCounter).value;
+            //actionNodesList[i].innerHTML = document.querySelector('#nameValueRow-' + idCounter).value;
             actionNodesList[i].style.gridRow = idCounter;
             timeValueNumber = Number(document.querySelector('#timeValueRow-' + idCounter).value);
             //draw strip on grid (startGridIndex / endGridIndex)
             actionNodesList[i].style.gridColumn = (currentTime) + ' / ' + (currentTime + timeValueNumber);
+            //write text in popup
+            actionNodesList[i].querySelector('.popup').innerHTML='Start: '+currentTime+'; End: '+(currentTime + timeValueNumber);
             //update current time variable
             currentTime = currentTime + timeValueNumber;
             //color current strip depend on selected type
@@ -160,6 +175,10 @@ function objectIdCounter(element) {
     return (element.id.slice(element.id.indexOf('-') + 1));
 }
 
+function toggleInfoPopup(element){
+    idCounter = objectIdCounter(element);
+    document.getElementById('popup-'+idCounter).classList.toggle('popupShow');
+}
 
 //event listener
 const sidebarPropElement = document.querySelector('.sidebar');
