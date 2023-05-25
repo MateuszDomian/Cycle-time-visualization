@@ -74,12 +74,19 @@ function createActionRow() {
         selectElement.appendChild(optionElement);
     }
     actionRowDiv.appendChild(selectElement);
-    //delete button
+    //add delete button
     const deleteRowBtn = document.createElement('button');
     deleteRowBtn.innerHTML = 'X';
     deleteRowBtn.setAttribute('id', 'deleteBtnRow-' + nextFreeidCounter);
     deleteRowBtn.setAttribute('onclick', 'removeActionRow(this)')
     actionRowDiv.appendChild(deleteRowBtn)
+    //add start time input 
+    const startTimeInput = document.createElement('input');
+    startTimeInput.setAttribute('type','text');
+    startTimeInput.setAttribute('class','startTime');
+    startTimeInput.setAttribute('id','startTime-' + nextFreeidCounter);
+    startTimeInput.setAttribute('placeholder','Start Time');
+    actionRowDiv.appendChild(startTimeInput);
 
     drawScale();
     drawActionsDiag();
@@ -141,11 +148,15 @@ function drawActionsDiag() {
         if (actionNodesList[i].nodeType === 1) {
             idCounter = objectIdCounter(actionNodesList[i]);
             actionNodesList[i].querySelector('.textDiv').innerHTML=document.querySelector('#nameValueRow-' + idCounter).value;
-            //actionNodesList[i].innerHTML = document.querySelector('#nameValueRow-' + idCounter).value;
             actionNodesList[i].style.gridRow = idCounter;
             timeValueNumber = Number(document.querySelector('#timeValueRow-' + idCounter).value);
+            //check start  time input
+            if (document.querySelector('#startTime-'+ idCounter).value !== ''){
+                currentTime=Number(document.querySelector('#startTime-'+ idCounter).value);
+                console.log(currentTime);
+            }
             //draw strip on grid (startGridIndex / endGridIndex)
-            actionNodesList[i].style.gridColumn = (currentTime) + ' / ' + (currentTime + timeValueNumber);
+            actionNodesList[i].style.gridColumn = (currentTime) + ' / ' + (currentTime + timeValueNumber);         
             //write text in popup
             actionNodesList[i].querySelector('.popup').innerHTML='Start: '+currentTime+'; End: '+(currentTime + timeValueNumber);
             //update current time variable
@@ -185,4 +196,5 @@ const sidebarPropElement = document.querySelector('.sidebar');
 
 sidebarPropElement.addEventListener("change",drawScale);
 sidebarPropElement.addEventListener("change",drawActionsDiag);
+document.addEventListener("DOMContentLoaded", drawActionsDiag);
    

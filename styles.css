@@ -205,3 +205,10 @@ select{
     from {opacity: 0;}
     to {opacity:1 ;}
   } 
+
+  .startTime{
+    width: 70px;
+    background-color: var(--daColor);
+    border: none;
+    color: var(--contrastColor);
+  }
