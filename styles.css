@@ -1,19 +1,22 @@
 :root {
-    --bgColor: #E3E8ED;
+    /* Color palette */
     /*background color*/
-    --contrastColor: #7DBCB8;
+    --bgColor: #E3E8ED;
     /*contrast color*/
-    --mainColor: #136F96;
+    --contrastColor: #7DBCB8;
     /*main color*/
-    --daColor: #50708B;
+    --mainColor: #136F96;
     /*dark accent color*/
-    --dsColor: #131B25;
+    --daColor: #50708B;
     /*dark shades color*/
+    --dsColor: #131B25;
+
+    /* Draw diagram variables */
     --zoomRatio: 1;
     --widthBase: 40;
     --widthUnit: 40px;
     --heightUnit: 22px;
-    
+    --unitResolution: 5;
 }
 
 .container {
@@ -124,7 +127,7 @@
     grid-template-rows: 22px;
 }
 
-.diagramRow{
+.diagramRow {
     cursor: pointer;
 }
 
@@ -134,34 +137,29 @@
     justify-items: center;
 }
 
-div.diagramData :nth-child(1) {
-    grid-row: 1;
-    grid-column: 1 / 10;
-}
-
-.actionNameRow{
+.actionNameRow {
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
 }
 
-select{
+select {
     background-color: var(--daColor);
     border: none;
     color: var(--contrastColor);
 }
 
-.zoomBtn > button{
-    width:45%;
+.zoomBtn>button {
+    width: 45%;
 }
 
-.diagramRow{
+.diagramRow {
     position: relative;
     display: inline-block;
 }
 
-  /*popup appears on top */
-  .popup {
+/*popup appears on top */
+.popup {
     visibility: hidden;
     width: 160px;
     background-color: #555;
@@ -174,10 +172,10 @@ select{
     bottom: 125%;
     left: 50%;
     margin-left: -80px;
-  }
-  
-  /* Popup arrow */
-  .popup::after {
+}
+
+/* Popup arrow */
+.popup::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -186,29 +184,39 @@ select{
     border-width: 5px;
     border-style: solid;
     border-color: #555 transparent transparent transparent;
-  }
+}
 
-  /* Toggle this class when clicking on the popup container (hide and show the popup) */
-    .popupShow {
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popupShow {
     visibility: visible;
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s
-  }
-  
-  /* Add animation (fade in the popup) */
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
-  } 
+}
 
-  .startTime{
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.startTime {
     width: 70px;
     background-color: var(--daColor);
     border: none;
     color: var(--contrastColor);
-  }
+}
