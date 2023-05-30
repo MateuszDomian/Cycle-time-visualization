@@ -124,12 +124,15 @@ function drawScale() {
     //clear node
     scaleContainer.innerHTML = '';
     //add new divs
-    for (let i = 1; i <= Math.ceil(totalCycleTime); i++) {
+    for (let i = 0; i <= Math.ceil(totalCycleTime); i++) {
         oneUnitDiv = document.createElement('div');
+        //do not write number on start scale
+        if (i !==0){ 
         oneUnitDiv.innerHTML = i;
+    }
         scaleContainer.appendChild(oneUnitDiv);
     }
-    scaleContainer.style.gridTemplateColumns = 'repeat(' + Math.ceil(totalCycleTime) + ', var(--widthUnit))';
+    scaleContainer.style.gridTemplateColumns = 'repeat(' + Math.ceil(totalCycleTime+1) + ', var(--widthUnit))';
     diagramDataContainer.style.gridTemplateColumns = 'repeat(' + totalCycleTime * unitResolution + ', calc((var(--widthUnit) / var(--unitResolution))))';
 }
 
@@ -165,7 +168,6 @@ function drawActionsDiag() {
                 startGridIndex = currentTime * unitResolution + 1;
             }
             let endGridIndex = startGridIndex + timeValueNumber * unitResolution;
-            console.log(endGridIndex);
             actionNodesList[i].style.gridColumn = (startGridIndex) + ' / ' + (endGridIndex);
             //write text in popup
             actionNodesList[i].querySelector('.popup').innerHTML = 'Start: ' + currentTime + '; End: ' + (currentTime + timeValueNumber);

@@ -17,6 +17,19 @@
     --widthUnit: 40px;
     --heightUnit: 22px;
     --unitResolution: 5;
+
+    /* Scale */
+      /* Low ticks */
+  --ruler1-x: 2px;
+  --ruler1-c: var(--daColor);
+  --ruler1-h: 10px;
+  --ruler1-space: var(--widthUnit);
+
+  /* Tall ticks */
+  --ruler2-x: 1px;
+  --ruler2-c:  var(--daColor);
+  --ruler2-h: 3px;
+  --ruler2-space: calc(var(--widthUnit)/var(--unitResolution));
 }
 
 .container {
@@ -133,8 +146,22 @@
 
 .scale {
     display: grid;
-    grid-template-columns: repeat(10, var(--widthUnit));
     justify-items: center;
+    grid-template-rows: calc(1.5* var(--heightUnit));
+    align-items: end;
+
+    background-image:
+    linear-gradient(90deg, var(--ruler1-c) 0 var(--ruler1-x), transparent 0),
+    linear-gradient(90deg, var(--ruler2-c) 0 var(--ruler2-x), transparent 0);
+    background-repeat: repeat-x;
+    background-size:
+      var(--ruler1-space) var(--ruler1-h),
+      var(--ruler2-space) var(--ruler2-h);
+    }
+
+.scale > div{
+    /* align scale numbers under scale main lines */
+    margin-left: calc(var(--widthUnit) * -1 );    
 }
 
 .actionNameRow {
