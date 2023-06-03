@@ -127,13 +127,13 @@ function drawScale() {
     for (let i = 0; i <= Math.ceil(totalCycleTime); i++) {
         oneUnitDiv = document.createElement('div');
         //do not write number on start scale
-        if (i !==0){ 
-        oneUnitDiv.innerHTML = i;
-    }
+        if (i !== 0) {
+            oneUnitDiv.innerHTML = i;
+        }
         scaleContainer.appendChild(oneUnitDiv);
     }
-    scaleContainer.style.gridTemplateColumns = 'repeat(' + Math.ceil(totalCycleTime+1) + ', var(--widthUnit))';
-    diagramDataContainer.style.gridTemplateColumns = 'repeat(' + totalCycleTime * unitResolution + ', calc((var(--widthUnit) / var(--unitResolution))))';
+    scaleContainer.style.gridTemplateColumns = 'repeat(' + Math.ceil(totalCycleTime + 1) + ', var(--widthUnit))';
+    diagramDataContainer.style.gridTemplateColumns = 'repeat(' + Math.ceil(totalCycleTime * unitResolution) + ', calc((var(--widthUnit) / var(--unitResolution))))';
 }
 
 function drawActionsDiag() {
@@ -156,44 +156,58 @@ function drawActionsDiag() {
             actionNodesList[i].querySelector('.textDiv').innerHTML = document.querySelector('#nameValueRow-' + idCounter).value;
             actionNodesList[i].style.gridRow = idCounter;
             timeValueNumber = Number(document.querySelector('#timeValueRow-' + idCounter).value);
-            //check start  time input
-            if (document.querySelector('#startTime-' + idCounter).value !== '') {
-                currentTime = Number(document.querySelector('#startTime-' + idCounter).value);
-            }
-            //draw strip on grid (startGridIndex / endGridIndex)
-            let startGridIndex;
-            if (currentTime === 1) {
-                startGridIndex = 1;
+            // if action time equal zero, then hide action strip on diagram
+            if (timeValueNumber === 0) {
+                actionNodesList[i].style.visibility = 'hidden';
             } else {
-                startGridIndex = currentTime * unitResolution + 1;
-            }
-            let endGridIndex = startGridIndex + timeValueNumber * unitResolution;
-            actionNodesList[i].style.gridColumn = (startGridIndex) + ' / ' + (endGridIndex);
-            //write text in popup
-            actionNodesList[i].querySelector('.popup').innerHTML = 'Start: ' + currentTime + '; End: ' + (currentTime + timeValueNumber);
-            //update current time variable
-            if (currentTime === 1) {
-                currentTime = timeValueNumber;
-            } else {
-                currentTime = currentTime + timeValueNumber;
-            }
-            //color current strip depend on selected type
-            typeValue = document.querySelector('#actiontype-' + idCounter).value;
-            switch (typeValue) {
-                case '1':
-                    actionNodesList[i].style.backgroundColor = 'blue';
-                    break;
-                case '2':
-                    actionNodesList[i].style.backgroundColor = 'red';
-                    break;
-                case '3':
-                    actionNodesList[i].style.backgroundColor = 'green';
-                    break;
-                default:
-                    actionNodesList[i].style.backgroundColor = 'pink';
-                    break;
-            }
+                actionNodesList[i].style.visibility = 'visible';
+                //check start  time input
+                if (document.querySelector('#startTime-' + idCounter).value !== '') {
+                    currentTime = Number(document.querySelector('#startTime-' + idCounter).value);
+                }
+                //draw strip on grid (startGridIndex / endGridIndex)
+                let startGridIndex;
+                let endGridIndex;
 
+                if (currentTime === 1) {
+                    startGridIndex = 1;
+                    endGridIndex = Math.ceil(timeValueNumber * unitResolution + 1);
+                    console.log(endGridIndex);
+                } else {
+                    startGridIndex = Math.ceil(currentTime * unitResolution + 1);
+                    endGridIndex = Math.ceil(currentTime * unitResolution + 1 + timeValueNumber * unitResolution);
+                }
+                actionNodesList[i].style.gridColumn = (startGridIndex) + ' / ' + (endGridIndex);
+                //write text in popup        
+                if (currentTime === 1) {
+                    actionNodesList[i].querySelector('.popup').innerHTML = 'Start: ' + 0 + '; End: ' + (timeValueNumber);
+                } else {
+                    actionNodesList[i].querySelector('.popup').innerHTML = 'Start: ' + currentTime + '; End: ' + (currentTime + timeValueNumber);
+                }
+                //update current time variable
+                if (currentTime === 1) {
+                    currentTime = timeValueNumber;
+                } else {
+                    currentTime = currentTime + timeValueNumber;
+                }
+                //color current strip depend on selected type
+                typeValue = document.querySelector('#actiontype-' + idCounter).value;
+                switch (typeValue) {
+                    case '1':
+                        actionNodesList[i].style.backgroundColor = 'blue';
+                        break;
+                    case '2':
+                        actionNodesList[i].style.backgroundColor = 'red';
+                        break;
+                    case '3':
+                        actionNodesList[i].style.backgroundColor = 'green';
+                        break;
+                    default:
+                        actionNodesList[i].style.backgroundColor = 'pink';
+                        break;
+                }
+
+            }
         }
     }
 }
