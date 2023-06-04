@@ -9,21 +9,21 @@ document.querySelector('#toggleSidebarBtn').onclick = function () {
     sidebarRows.classList.toggle('hideText');
 }
 
-function zoomIn(){
+function zoomIn() {
     let zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
-    document.documentElement.style.setProperty('--zoomRatio',zoomRatio+0.1);
+    document.documentElement.style.setProperty('--zoomRatio', zoomRatio + 0.1);
     zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
     let widthBase = getComputedStyle(document.documentElement).getPropertyValue('--widthBase');
-    document.documentElement.style.setProperty('--widthUnit', (widthBase*zoomRatio)+'px');
-    }
-    
-    function zoomOut(){
-        let zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
-        document.documentElement.style.setProperty('--zoomRatio',zoomRatio-0.1);
-        zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
-        let widthBase = getComputedStyle(document.documentElement).getPropertyValue('--widthBase');
-        document.documentElement.style.setProperty('--widthUnit', (widthBase*zoomRatio)+'px');
-    }
+    document.documentElement.style.setProperty('--widthUnit', (widthBase * zoomRatio) + 'px');
+}
+
+function zoomOut() {
+    let zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
+    document.documentElement.style.setProperty('--zoomRatio', zoomRatio - 0.1);
+    zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
+    let widthBase = getComputedStyle(document.documentElement).getPropertyValue('--widthBase');
+    document.documentElement.style.setProperty('--widthUnit', (widthBase * zoomRatio) + 'px');
+}
 
 function createActionRow() {
     //add div row
@@ -46,24 +46,24 @@ function createActionRow() {
     const diagramData = document.querySelector('.diagramData');
     const actionRowDiagram = document.createElement('div');
     actionRowDiagram.setAttribute('class', 'diagramRow');
-    actionRowDiagram.setAttribute('onClick','toggleInfoPopup(this)')
+    actionRowDiagram.setAttribute('onClick', 'toggleInfoPopup(this)')
     diagramData.appendChild(actionRowDiagram);
     //add text div in action div diagram
     const textDiv = document.createElement('div');
     textDiv.classList.add('textDiv');
-    actionRowDiagram.appendChild(textDiv);       
+    actionRowDiagram.appendChild(textDiv);
     //count object with class
     let nextFreeidCounter = nextRowIdCounter();
     actionRowInputTime.setAttribute('id', 'timeValueRow-' + nextFreeidCounter);
     actionRowInputName.setAttribute('id', 'nameValueRow-' + nextFreeidCounter);
     actionRowDiagram.setAttribute('id', 'diagramRow-' + nextFreeidCounter);
-    
+
     actionRowDiv.appendChild(actionRowInputTime);
     //add popup 
     const popupInfo = document.createElement('span');
     popupInfo.classList.add('popup');
     actionRowDiagram.appendChild(popupInfo);
-    popupInfo.setAttribute('id', 'popup-'+ nextFreeidCounter);
+    popupInfo.setAttribute('id', 'popup-' + nextFreeidCounter);
     //add select element
     const selectElement = document.createElement('select');
     selectElement.setAttribute('id', 'actiontype-' + nextFreeidCounter);
@@ -82,10 +82,10 @@ function createActionRow() {
     actionRowDiv.appendChild(deleteRowBtn)
     //add start time input 
     const startTimeInput = document.createElement('input');
-    startTimeInput.setAttribute('type','text');
-    startTimeInput.setAttribute('class','startTime');
-    startTimeInput.setAttribute('id','startTime-' + nextFreeidCounter);
-    startTimeInput.setAttribute('placeholder','Start Time');
+    startTimeInput.setAttribute('type', 'text');
+    startTimeInput.setAttribute('class', 'startTime');
+    startTimeInput.setAttribute('id', 'startTime-' + nextFreeidCounter);
+    startTimeInput.setAttribute('placeholder', 'Start Time');
     actionRowDiv.appendChild(startTimeInput);
 
     drawScale();
@@ -119,17 +119,21 @@ function drawScale() {
     const scaleContainer = document.querySelector('.scale');
     const totalCycleTime = countTotalCycleTime();
     const diagramDataContainer = document.querySelector('.diagramData')
+    const unitResolution = Number(getComputedStyle(document.documentElement).getPropertyValue('--unitResolution'));
 
     //clear node
     scaleContainer.innerHTML = '';
     //add new divs
-    for (let i = 1; i <= totalCycleTime; i++) {
+    for (let i = 0; i <= Math.ceil(totalCycleTime); i++) {
         oneUnitDiv = document.createElement('div');
-        oneUnitDiv.innerHTML = i;
+        //do not write number on start scale
+        if (i !== 0) {
+            oneUnitDiv.innerHTML = i;
+        }
         scaleContainer.appendChild(oneUnitDiv);
     }
-    scaleContainer.style.gridTemplateColumns = 'repeat(' + totalCycleTime + ', var(--widthUnit))';
-    diagramDataContainer.style.gridTemplateColumns = 'repeat(' + totalCycleTime + ', var(--widthUnit))';
+    scaleContainer.style.gridTemplateColumns = 'repeat(' + Math.ceil(totalCycleTime + 1) + ', var(--widthUnit))';
+    diagramDataContainer.style.gridTemplateColumns = 'repeat(' + Math.ceil(totalCycleTime * unitResolution) + ', calc((var(--widthUnit) / var(--unitResolution))))';
 }
 
 function drawActionsDiag() {
@@ -143,41 +147,67 @@ function drawActionsDiag() {
     let idCounter = 0;
     //variable to check selected type
     let typeValue;
+
+    const unitResolution = Number(getComputedStyle(document.documentElement).getPropertyValue('--unitResolution'));
     for (let i = 1; i < actionNodesList.length; i++) {
         //check nodeType because of some nodes with type text   
         if (actionNodesList[i].nodeType === 1) {
             idCounter = objectIdCounter(actionNodesList[i]);
-            actionNodesList[i].querySelector('.textDiv').innerHTML=document.querySelector('#nameValueRow-' + idCounter).value;
+            actionNodesList[i].querySelector('.textDiv').innerHTML = document.querySelector('#nameValueRow-' + idCounter).value;
             actionNodesList[i].style.gridRow = idCounter;
             timeValueNumber = Number(document.querySelector('#timeValueRow-' + idCounter).value);
-            //check start  time input
-            if (document.querySelector('#startTime-'+ idCounter).value !== ''){
-                currentTime=Number(document.querySelector('#startTime-'+ idCounter).value);
-                console.log(currentTime);
-            }
-            //draw strip on grid (startGridIndex / endGridIndex)
-            actionNodesList[i].style.gridColumn = (currentTime) + ' / ' + (currentTime + timeValueNumber);         
-            //write text in popup
-            actionNodesList[i].querySelector('.popup').innerHTML='Start: '+currentTime+'; End: '+(currentTime + timeValueNumber);
-            //update current time variable
-            currentTime = currentTime + timeValueNumber;
-            //color current strip depend on selected type
-            typeValue = document.querySelector('#actiontype-' + idCounter).value;
-            switch (typeValue) {
-                case '1':
-                    actionNodesList[i].style.backgroundColor = 'blue';
-                    break;
-                case '2':
-                    actionNodesList[i].style.backgroundColor = 'red';
-                    break;
-                case '3':
-                    actionNodesList[i].style.backgroundColor = 'green';
-                    break;
-                default:
-                    actionNodesList[i].style.backgroundColor = 'pink';
-                    break;
-            }
+            // if action time equal zero, then hide action strip on diagram
+            if (timeValueNumber === 0) {
+                actionNodesList[i].style.visibility = 'hidden';
+            } else {
+                actionNodesList[i].style.visibility = 'visible';
+                //check start  time input
+                if (document.querySelector('#startTime-' + idCounter).value !== '') {
+                    currentTime = Number(document.querySelector('#startTime-' + idCounter).value);
+                }
+                //draw strip on grid (startGridIndex / endGridIndex)
+                let startGridIndex;
+                let endGridIndex;
 
+                if (currentTime === 1) {
+                    startGridIndex = 1;
+                    endGridIndex = Math.ceil(timeValueNumber * unitResolution + 1);
+                    console.log(endGridIndex);
+                } else {
+                    startGridIndex = Math.ceil(currentTime * unitResolution + 1);
+                    endGridIndex = Math.ceil(currentTime * unitResolution + 1 + timeValueNumber * unitResolution);
+                }
+                actionNodesList[i].style.gridColumn = (startGridIndex) + ' / ' + (endGridIndex);
+                //write text in popup        
+                if (currentTime === 1) {
+                    actionNodesList[i].querySelector('.popup').innerHTML = 'Start: ' + 0 + '; End: ' + (timeValueNumber);
+                } else {
+                    actionNodesList[i].querySelector('.popup').innerHTML = 'Start: ' + currentTime + '; End: ' + (currentTime + timeValueNumber);
+                }
+                //update current time variable
+                if (currentTime === 1) {
+                    currentTime = timeValueNumber;
+                } else {
+                    currentTime = currentTime + timeValueNumber;
+                }
+                //color current strip depend on selected type
+                typeValue = document.querySelector('#actiontype-' + idCounter).value;
+                switch (typeValue) {
+                    case '1':
+                        actionNodesList[i].style.backgroundColor = 'blue';
+                        break;
+                    case '2':
+                        actionNodesList[i].style.backgroundColor = 'red';
+                        break;
+                    case '3':
+                        actionNodesList[i].style.backgroundColor = 'green';
+                        break;
+                    default:
+                        actionNodesList[i].style.backgroundColor = 'pink';
+                        break;
+                }
+
+            }
         }
     }
 }
@@ -186,15 +216,15 @@ function objectIdCounter(element) {
     return (element.id.slice(element.id.indexOf('-') + 1));
 }
 
-function toggleInfoPopup(element){
+function toggleInfoPopup(element) {
     idCounter = objectIdCounter(element);
-    document.getElementById('popup-'+idCounter).classList.toggle('popupShow');
+    document.getElementById('popup-' + idCounter).classList.toggle('popupShow');
 }
 
 //event listener
 const sidebarPropElement = document.querySelector('.sidebar');
 
-sidebarPropElement.addEventListener("change",drawScale);
-sidebarPropElement.addEventListener("change",drawActionsDiag);
+sidebarPropElement.addEventListener("change", drawScale);
+sidebarPropElement.addEventListener("change", drawActionsDiag);
+document.addEventListener("DOMContentLoaded", drawScale);
 document.addEventListener("DOMContentLoaded", drawActionsDiag);
-   
