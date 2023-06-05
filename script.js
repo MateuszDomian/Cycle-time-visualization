@@ -36,12 +36,14 @@ function createActionRow() {
     actionRowInputName.classList.add('actionNameInput');
     actionRowInputName.setAttribute('type', 'text');
     actionRowInputName.setAttribute('value', 'Action name');
+    actionRowInputName.setAttribute('pattern', '^[\\s\\S]{1,20}');
     actionRowDiv.appendChild(actionRowInputName);
     //add action time input
     const actionRowInputTime = document.createElement('input');
     actionRowInputTime.classList.add('actionTimeInput');
     actionRowInputTime.setAttribute('type', 'text');
-    actionRowInputTime.setAttribute('value', '10 ');
+    actionRowInputTime.setAttribute('value', '10');
+    actionRowInputTime.setAttribute('pattern', '^[0-9]{1,3}(\\.[0-9]{1})?');
     //add action div in diagram
     const diagramData = document.querySelector('.diagramData');
     const actionRowDiagram = document.createElement('div');
@@ -86,10 +88,11 @@ function createActionRow() {
     startTimeInput.setAttribute('class', 'startTime');
     startTimeInput.setAttribute('id', 'startTime-' + nextFreeidCounter);
     startTimeInput.setAttribute('placeholder', 'Start Time');
+    startTimeInput.setAttribute('pattern', '^[0-9]{1,3}(\\.[0-9]{1})?');
     actionRowDiv.appendChild(startTimeInput);
 
-    drawScale();
-    drawActionsDiag();
+     drawScale();
+     drawActionsDiag();
 }
 
 function removeActionRow(actionRow) {
@@ -172,7 +175,6 @@ function drawActionsDiag() {
                 if (currentTime === 1) {
                     startGridIndex = 1;
                     endGridIndex = Math.ceil(timeValueNumber * unitResolution + 1);
-                    console.log(endGridIndex);
                 } else {
                     startGridIndex = Math.ceil(currentTime * unitResolution + 1);
                     endGridIndex = Math.ceil(currentTime * unitResolution + 1 + timeValueNumber * unitResolution);
@@ -221,10 +223,29 @@ function toggleInfoPopup(element) {
     document.getElementById('popup-' + idCounter).classList.toggle('popupShow');
 }
 
+//If inputs are valid then draw scale and actions rows
+function isInputsValid(){
+    let inputs = document.getElementsByTagName('input');
+    for (let i=0; i < inputs.length; i++){   
+        if (!inputs[i].validity.valid){
+            return false
+        }
+        if (i === inputs.length-1){
+            drawScale();
+            drawActionsDiag();
+            return true;
+        }
+    }
+}
+
+
 //event listener
 const sidebarPropElement = document.querySelector('.sidebar');
 
-sidebarPropElement.addEventListener("change", drawScale);
-sidebarPropElement.addEventListener("change", drawActionsDiag);
+sidebarPropElement.addEventListener("change", isInputsValid);
 document.addEventListener("DOMContentLoaded", drawScale);
 document.addEventListener("DOMContentLoaded", drawActionsDiag);
+
+// TEST
+document.addEventListener("DOMContentLoaded", isInputsValid);
+sidebarPropElement.addEventListener("change", isInputsValid);

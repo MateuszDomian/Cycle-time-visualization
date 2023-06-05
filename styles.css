@@ -247,3 +247,10 @@ select {
     border: none;
     color: var(--contrastColor);
 }
+
+input:invalid{
+    background-color: red;
+}
+
+
+  
