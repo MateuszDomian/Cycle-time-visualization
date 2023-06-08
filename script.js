@@ -184,7 +184,7 @@ function drawActionsDiag() {
                 if (currentTime === 1) {
                     actionNodesList[i].querySelector('.popup').innerHTML = 'Start: ' + 0 + '; End: ' + (timeValueNumber);
                 } else {
-                    actionNodesList[i].querySelector('.popup').innerHTML = 'Start: ' + currentTime + '; End: ' + (currentTime + timeValueNumber);
+                    actionNodesList[i].querySelector('.popup').innerHTML = 'Start: ' + Math.round(currentTime * 10) / 10 + '; End: ' + Math.round((currentTime + timeValueNumber) * 10) / 10;
                 }
                 //update current time variable
                 if (currentTime === 1) {
