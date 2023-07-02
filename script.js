@@ -1,14 +1,3 @@
-const sidebar = document.querySelector('.sidebar');
-const arrow = document.querySelector('.arrow');
-const title = document.querySelector('.title');
-const sidebarRows = document.querySelector('.actionNamesRowsContainer')
-document.querySelector('#toggleSidebarBtn').onclick = function () {
-    sidebar.classList.toggle('sidebarSmall');
-    arrow.classList.toggle('arrowTransform');
-    title.classList.toggle('hideText');
-    sidebarRows.classList.toggle('hideText');
-}
-
 function zoomIn() {
     let zoomRatio = Number(getComputedStyle(document.documentElement).getPropertyValue('--zoomRatio'));
     document.documentElement.style.setProperty('--zoomRatio', zoomRatio + 0.1);
@@ -196,13 +185,13 @@ function drawActionsDiag() {
                 typeValue = document.querySelector('#actiontype-' + idCounter).value;
                 switch (typeValue) {
                     case '1':
-                        actionNodesList[i].style.backgroundColor = 'blue';
+                        actionNodesList[i].style.backgroundColor = 'var(--c-olive-500)';
                         break;
                     case '2':
-                        actionNodesList[i].style.backgroundColor = 'red';
+                        actionNodesList[i].style.backgroundColor = 'var(--c-green-500)';
                         break;
                     case '3':
-                        actionNodesList[i].style.backgroundColor = 'green';
+                        actionNodesList[i].style.backgroundColor = 'var(--c-gray-300)';
                         break;
                     default:
                         actionNodesList[i].style.backgroundColor = 'pink';
