@@ -1,34 +1,18 @@
 :root {
-    /* Color palette */
-    /*background color*/
-    --bgColor: #E3E8ED;
-    /*contrast color*/
-    --contrastColor: #7DBCB8;
-    /*main color*/
-    --mainColor: #136F96;
-    /*dark accent color*/
-    --daColor: #50708B;
     /*dark shades color*/
     --dsColor: #131B25;
 
-    --c-gray-900: #000000;
-	--c-gray-800: #1f1f1f;
-	--c-gray-700: #2e2e2e;
-	--c-gray-600: #313131;
-	--c-gray-500: #969593;
-	--c-gray-400: #a6a6a6;
-	--c-gray-300: #bdbbb7;
-	--c-gray-200: #f1f1f1;
-	--c-gray-100: #ffffff;
+    --c-gray-900: #131B25;
+    --c-gray-600: #313131;
+    --c-gray-500: #969593;
+    --c-gray-100: #ffffff;
 
-	--c-green-500: #45ffbc;
-	--c-olive-500: #e3ffa8;
+    --c-orange: #f57c00;;
+    --c-red: #f00;
+    --c-green: #4caf50;
 
-	--c-white: var(--c-gray-100);
-
-	--c-text-primary: var(--c-gray-100);
-	--c-text-secondary: var(--c-gray-200);
-	--c-text-tertiary: var(--c-gray-500);
+    --c-text-primary: var(--c-gray-100);
+    --c-text-secondary: var(--c-gray-500);
 
     --component-background: rgba(0, 0, 0, 0.45);
 
@@ -40,66 +24,80 @@
     --unitResolution: 10;
 
     /* Scale */
-      /* Low ticks */
-  --ruler1-x: 2px;
-  --ruler1-c: var(--daColor);
-  --ruler1-h: 10px;
-  --ruler1-space: var(--widthUnit);
+    /* Low ticks */
+    --ruler1-x: 2px;
+    --ruler1-c: var(--c-text-primary);
+    --ruler1-h: 10px;
+    --ruler1-space: var(--widthUnit);
 
-  /* Tall ticks */
-  --ruler2-x: 1px;
-  --ruler2-c:  var(--daColor);
-  --ruler2-h: 3px;
-  --ruler2-space: calc(var(--widthUnit)/var(--unitResolution));
+    /* Tall ticks */
+    --ruler2-x: 1px;
+    --ruler2-c: var(--c-text-secondary);
+    ;
+    --ruler2-h: 3px;
+    --ruler2-space: calc(var(--widthUnit)/var(--unitResolution));
 }
 
 html {
     font-size: 62.5%;
-  }
+}
 
-.container {
-    display: flex;
-    min-height: 80vh;
+body {
+    overflow: hidden;
+}
+
+.gridsContainer {
+    min-height: 85vh;
+    max-height: 85vh;
+    overflow: scroll;
+    margin-left: 15vw;
+
     padding: 1vw;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--component-background);
+    box-shadow: 0px 1px 5px 1px var(--dsColor);
     backdrop-filter: blur(30px);
     border-radius: 15px;
 }
 
-aside{
-    width: 15%;
+.mainDiagram {
+    display: grid;
 }
 
 .sidebar {
     display: flex;
     flex-direction: column;
-    min-width: 150px;
-    height: 100vh;
-    color: var(--bgColor);
-    box-shadow: 0px 1px 5px 1px var(--daColor);
+    min-height: 85vh;
+    max-height: 85vh;
+    width: 12vw;
+    position: fixed;
 
     background: var(--component-background);
-    padding: 20px;
-    border-radius: 20px;
-    backdrop-filter: blur(20px);
+    box-shadow: 0px 1px 5px 1px var(--dsColor);
+    padding: 1vw;
+    border-radius: 15px;
+    backdrop-filter: blur(30px);
 }
 
-#actionRowsContainer{
-    padding: 10px;
+#actionRowsContainer {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    direction: rtl;
+    justify-content: center;
+    padding: 2vh;
 }
 
-.addRowBtn{
-    width: 80%;
+.addRowBtn {
+    width: 90%;
 }
 
-.zoomBtn{
+.zoomBtn {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
 }
+
 .zoomBtn>button {
     width: 45%;
 }
@@ -108,81 +106,77 @@ aside{
     display: flex;
     flex-direction: row;
     width: 100%;
-    border-bottom: 1px solid var(--c-gray-600);
+    border-bottom: 0.2rem solid var(--c-gray-500);
 }
 
 .title {
     margin: auto;
     text-align: center;
     font-weight: bold;
-    color: var(--c-text-primary); 
+    color: var(--c-text-primary);
 }
 
 .logo {
-    margin: 5px;
+    margin: 0.5 rem;
     padding-bottom: 0.5rem;
-	padding-top: 0.5rem;	
-    color: var(--c-text-tertiary);
-}
-
-.mainDiagram {
-    display: grid;
-    height: 100%;
+    padding-top: 0.5rem;
+    color: var(--c-text-primary);
 }
 
 .diagramData {
     display: grid;
     justify-items: stretch;
     text-align: center;
-    grid-template-rows: 22px;
+    grid-template-rows: var(--unitResolution);
+    margin-top: 5vh;
 }
 
 .diagramRow {
-    cursor: pointer; 
-	border-radius: 8px;
-	color: var(--c-gray-900);
+    cursor: pointer;
+    border-radius: 10px;
+    color: var(--c-gray-900);
+    margin: 0.1vh;
 }
 
 .scale {
     display: grid;
+    padding-bottom: 20px;
     justify-items: center;
     grid-template-rows: calc(1.5* var(--heightUnit));
     align-items: end;
 
     background-image:
-    linear-gradient(90deg, var(--ruler1-c) 0 var(--ruler1-x), transparent 0),
-    linear-gradient(90deg, var(--ruler2-c) 0 var(--ruler2-x), transparent 0);
+        linear-gradient(90deg, var(--ruler1-c) 0 var(--ruler1-x), transparent 0),
+        linear-gradient(90deg, var(--ruler2-c) 0 var(--ruler2-x), transparent 0);
     background-repeat: repeat-x;
     background-size:
-      var(--ruler1-space) var(--ruler1-h),
-      var(--ruler2-space) var(--ruler2-h);
-    }
+        var(--ruler1-space) var(--ruler1-h),
+        var(--ruler2-space) var(--ruler2-h);
+    max-height: var(--heightUnit);
+    position: fixed;
+    backdrop-filter: blur(20px);
+}
 
-.scale > div{
+.scale>div {
     /* align scale numbers under scale main lines */
-    margin-left: calc(var(--widthUnit) * -1 );    
+    margin-left: calc(var(--widthUnit) * -1);
 }
 
 .actionNameRow {
     display: flex;
+    position: relative;
     flex-wrap: wrap;
-    justify-content: start;
-    gap: 10px;
-    margin: 5px;
-    padding: 2px;
-    border: 1px solid var(--c-gray-600);
-    border-radius: 8px;
+    justify-content: space-around;
+    gap: 1rem;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--c-gray-500);
 }
 
-select {
-    background-color: var(--daColor);
-    border: none;
-    color: var(--contrastColor);
-}
-
-.deleteBtn{
+.deleteBtn {
     position: absolute;
-    right: 0;
+    right: -2rem;
+    top: 2rem;
 }
 
 .diagramRow {
@@ -193,17 +187,19 @@ select {
 /*popup appears on top */
 .popup {
     visibility: hidden;
-    width: 160px;
-    background-color: #555;
-    color: #fff;
+    width: 16rem;
+    background-color: var(--component-background);
+    box-shadow: 0px 1px 5px 1px var(--dsColor);
+    backdrop-filter: blur(30px);
+    color: var(--c-text-primary);
     text-align: center;
-    border-radius: 6px;
-    padding: 8px 0;
+    border-radius: 10px;
+    padding: 0.8rem 0;
     position: absolute;
     z-index: 1;
     bottom: 125%;
     left: 50%;
-    margin-left: -80px;
+    margin-left: -8rem;
 }
 
 /* Popup arrow */
@@ -212,8 +208,8 @@ select {
     position: absolute;
     top: 100%;
     left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
+    margin-left: -0.5rem;
+    border-width: 0.5rem;
     border-style: solid;
     border-color: #555 transparent transparent transparent;
 }
@@ -246,54 +242,46 @@ select {
     }
 }
 
-.startTime {
-    width: 70px;
-    background-color: var(--daColor);
-    border: none;
-    color: var(--contrastColor);
+input:invalid {
+    background-color: red !important;
 }
 
-input:invalid{
-    background-color: red;
+input[type="text"],
+select {
+    font-size: 1rem;
+    width: 40%;
+    padding: 0.4rem;
+    border-radius: 10px;
+    background: var(--component-background);
+    color: var(--c-text-primary);
+    font-family: "Poppins", sans-serif;
+    border: 0;
+    outline: 0;
+    text-align: center;
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: white;
 }
 
- input[type="text"], select {
-        font-size: 1rem;
-        width: 40%;
-        padding: 0.4rem;
-        border-radius: 10px;
-        background: #000;
-        color: #fff;
-        font-family: "Poppins", sans-serif;
-        border: 0;
-        outline: 0;
-        text-align: center;
-    
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        color: white;
-    }
 
-
-body{
+body {
     background: linear-gradient(45deg, #1D1A39 0%, #662549 35%, #F39F5A 100%);
     padding-top: 0.5vw;
-	padding-bottom: 0.5vw;
+    padding-bottom: 0.5vw;
     line-height: 1.5;
     color: var(--c-text-primary);
     background-size: cover;
     background-attachment: fixed;
 }
 
-button{
+button {
     background: dodgerblue;
-          color: #fff;
-          border: 0;
-          outline: 0;
-          border-radius: 30px;
-          cursor: pointer;
-}  
-
-
+    color: #fff;
+    border: 0;
+    outline: 0;
+    border-radius: 10px;
+    cursor: pointer;
+}

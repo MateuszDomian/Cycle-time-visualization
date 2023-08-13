@@ -70,6 +70,7 @@ function createActionRow() {
     deleteRowBtn.innerHTML = 'X';
     deleteRowBtn.setAttribute('id', 'deleteBtnRow-' + nextFreeidCounter);
     deleteRowBtn.setAttribute('onclick', 'removeActionRow(this)')
+    deleteRowBtn.setAttribute('class', 'deleteBtn');
     actionRowDiv.appendChild(deleteRowBtn)
     //add start time input 
     const startTimeInput = document.createElement('input');
@@ -185,13 +186,13 @@ function drawActionsDiag() {
                 typeValue = document.querySelector('#actiontype-' + idCounter).value;
                 switch (typeValue) {
                     case '1':
-                        actionNodesList[i].style.backgroundColor = 'var(--c-olive-500)';
+                        actionNodesList[i].style.backgroundColor = 'var(--c-orange)';
                         break;
                     case '2':
-                        actionNodesList[i].style.backgroundColor = 'var(--c-green-500)';
+                        actionNodesList[i].style.backgroundColor = 'var(--c-green)';
                         break;
                     case '3':
-                        actionNodesList[i].style.backgroundColor = 'var(--c-gray-300)';
+                        actionNodesList[i].style.backgroundColor = 'var(--c-red)';
                         break;
                     default:
                         actionNodesList[i].style.backgroundColor = 'pink';
